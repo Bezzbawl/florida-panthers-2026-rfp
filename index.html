@@ -38,16 +38,26 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { height: 100%; overflow: hidden; }
 
 body {
   font-family: 'Nicky Sans', 'Georgia', system-ui, sans-serif;
   background: #f9fafb;
   color: #374151;
-  overflow-x: hidden;
-  padding-top: calc(70px + env(safe-area-inset-top));
+  height: 100%;
+  overflow: hidden;
+}
+
+#scroll-container {
+  position: fixed;
+  top: calc(70px + env(safe-area-inset-top));
+  left: 0; right: 0; bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  background: #f9fafb;
+  scroll-behavior: smooth;
 }
 
 /* ── NAV ── */
@@ -560,6 +570,8 @@ a.cite-link:hover sup.cite { text-decoration: underline; opacity: 0.8; }
     <button class="nav-sub" data-slide="slide-3">At a Glance</button>
   </div>
 </nav>
+
+<div id="scroll-container">
 
 <!-- ═══════════════════════════════════════════
      SLIDE 1 — COVER
@@ -1793,6 +1805,7 @@ function setActiveNav(slideId) {
   renderTier2(ch, slideId);
 }
 
+const scrollContainer = document.getElementById('scroll-container');
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1800,12 +1813,12 @@ const scrollObserver = new IntersectionObserver((entries) => {
       setActiveNav(entry.target.id);
     }
   });
-}, { threshold: 0.4 });
+}, { root: scrollContainer, threshold: 0.4 });
 allSlides.forEach(s => scrollObserver.observe(s));
 
 const fadeObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.15 });
+}, { root: scrollContainer, threshold: 0.15 });
 document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
 
 document.addEventListener('keydown', e => {
@@ -1884,6 +1897,8 @@ document.getElementById('pwInput').focus();
   </div>
   <p style="font-size:11px;color:#9ca3af;margin-top:1.5rem;font-style:italic;">Note: NHL fan demographic figures (citations 4–7) represent national averages from industry research. Acxiom regional buyer data (citation 19) represents live event purchasers across three South Florida proxy venues and serves as the primary empirical audience dataset for this analysis. All Census figures are from the 2024 American Community Survey 5-year estimates. Acxiom data field completeness varies by variable; sample sizes noted in citation 19. Event frequency ranges by category (citation 20) are Legends estimates based on public calendar review; specific annual counts are not published by the venue.</p>
 </div>
+
+</div><!-- /#scroll-container -->
 
 </body>
 </html>
