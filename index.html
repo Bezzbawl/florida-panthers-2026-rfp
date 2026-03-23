@@ -9,6 +9,8 @@
 <meta name="theme-color" content="#041E42">
 <meta name="description" content="Florida Panthers Venue Audience Intelligence — Amerant Bank Arena. Confidential market analysis, audience personas, and hospitality bidder strategy.">
 <meta name="robots" content="noindex, nofollow">
+<script>window.goatcounter = { no_onload: true }</script>
+<script data-goatcounter="https://legendsglobal.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <title>Panthers and South Florida Intelligence</title>
 <style>
 /* ── LEGENDS BRAND FONTS ── */
@@ -1864,6 +1866,7 @@ async function tryUnlock() {
   if (h === HASH) {
     sessionStorage.setItem('via_panthers_unlocked', '1');
     sessionStorage.setItem('via_panthers_viewer', name);
+    if (window.goatcounter) window.goatcounter.count({ path: 'unlock', title: 'Viewer: ' + name, event: true });
     showApp();
   } else {
     err.textContent = 'Incorrect password — try again.';
